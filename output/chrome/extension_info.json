@@ -1,0 +1,24 @@
+{
+  "kango_version": "1.0.1 final", 
+  "content_scripts": [
+    "plugins/facebook.js", 
+    "js/hoverzoom.js", 
+    "js/shortcutHelper.js"
+  ], 
+  "description": "Extension description", 
+  "creator": "KangoExtensions", 
+  "background_scripts": [
+    "js/common.js", 
+    "main.js"
+  ], 
+  "homepage_url": "http://kangoextensions.com/", 
+  "version": "0.9", 
+  "options_page": "options.html", 
+  "browser_button": {
+    "caption": "Kango", 
+    "tooltipText": "Kango", 
+    "icon": "icons/button.png"
+  }, 
+  "id": "{9B1BCEBF-1CA0-44AD-A13C-DE26B2CA99EA}", 
+  "name": "ImageZoom"
+}

@@ -1,12 +1,13 @@
 {
-  "content_scripts": [], 
+  "content_scripts": ["plugins/facebook.js", "js/hoverzoom.js", "js/shortcutHelper.js"], 
   "description": "Extension description", 
   "creator": "KangoExtensions", 
   "background_scripts": [
-    "main.js"
+    "js/common.js", "main.js"
   ], 
   "homepage_url": "http://kangoextensions.com/", 
-  "version": "0.9", 
+  "version": "0.9",
+  "options_page": "options.html", 
   "browser_button": {
     "caption": "Kango", 
     "icon": "icons/button.png", 
