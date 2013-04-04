@@ -1,27 +1,36 @@
-// Copyright (c) 2012 Romain Vallet <romain.vallet@gmail.com>
+// ==UserScript==
+// @name Plugin
+// @require js/jquery.min.js
+// @all-frames true
+// @include *://*.pinterest.com/*
+// @include *://pinterest.com/*
+// ==/UserScript==
+
+// Copyright (c) 2013 Romain Vallet <romain.vallet@gmail.com>
 // Licensed under the MIT license, read license.txt
 
 var hoverZoomPlugins = hoverZoomPlugins || [];
-hoverZoomPlugins.push( {
-	name: 'Pinterest',
-	version: '0.3',
-	prepareImgLinks: function(callback) {
-		var res = [];
-		hoverZoom.urlReplace(res,
-			'img[src*="_b.jpg"], img[src*="_t.jpg"]',
-			/_[bt]\.jpg/,
-			'_c.jpg'
-		);
-		hoverZoom.urlReplace(res,
-			'img[src*="/avatars/"]',
-			/\.jpg/,
-			'_o.jpg'
-		);
-		hoverZoom.urlReplace(res,
-			'img[src*="type=square"]',
-			'type=square',
-			'type=large'
-		);
-		callback($(res));
-	}
+hoverZoomPlugins.push({
+    name:'Pinterest',
+    prepareImgLinks:function (callback) {
+        var res = [];
+		$('div.pin').each(function(){
+			var _this = $(this),
+				img = _this.find('img.PinImageImg'),
+				url = this.dataset ? this.dataset.closeupUrl : false;
+			if (img.length) {
+				if (!url) {
+					url = img.attr('src').replace('/192/', '/550/')
+				}
+				img.data().hoverZoomSrc = [url];
+				res.push(img);
+			}
+		});
+        hoverZoom.urlReplace(res,
+            'img[src*="/avatars/"]',
+            /\.jpg/,
+            '_o.jpg'
+        );
+        callback($(res));
+    }
 });

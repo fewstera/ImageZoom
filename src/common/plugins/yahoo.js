@@ -1,1 +1,40 @@
-/^https?\:\/\/(www\.)?opendesktop.org/, /^https?\:\/\/(www\.)?kde-apps.org/, /^https?\:\/\/(www\.)?gtk-apps.org/, /^https?\:\/\/(www\.)?meego-central.org/, /^https?\:\/\/(www\.)?cli-apps.org/, /^https?\:\/\/(www\.)?qt-apps.org/, /^https?\:\/\/(www\.)?qt-prop.org/, /^https?\:\/\/(www\.)?maemo-apps.org/, /^https?\:\/\/(www\.)?java-apps.org/, /^https?\:\/\/(www\.)?eyeos-apps.org/, /^https?\:\/\/(www\.)?wine-apps.org/, /^https?\:\/\/(www\.)?server-apps.org/, /^https?\:\/\/(www\.)?kde-look.org/, /^https?\:\/\/(www\.)?gnome-look.org/, /^https?\:\/\/(www\.)?xfce-look.org/, /^https?\:\/\/(www\.)?box-look.org/, /^https?\:\/\/(www\.)?e17-stuff.org/, /^https?\:\/\/(www\.)?beryl-themes.org/, /^https?\:\/\/(www\.)?compiz-themes.org/, /^https?\:\/\/(www\.)?ede-look.org/, /^https?\:\/\/(www\.)?debian-art.org/, /^https?\:\/\/(www\.)?gentoo-art.org/, /^https?\:\/\/(www\.)?suse-art.org/, /^https?\:\/\/(www\.)?ubuntu-art.org/, /^https?\:\/\/(www\.)?kubuntu-art.org/, /^https?\:\/\/(www\.)?linuxmint-art.org/, /^https?\:\/\/(www\.)?frugalware-art.org/, /^https?\:\/\/(www\.)?arch-stuff.org/, /^https?\:\/\/(www\.)?fedora-art.org/, /^https?\:\/\/(www\.)?mandriva-art.org/, /^https?\:\/\/(www\.)?kde-files.org/, /^https?\:\/\/(www\.)?opentemplate.org/, /^https?\:\/\/(www\.)?gimpstuff.org/, /^https?\:\/\/(www\.)?inkscapestuff.org/, /^https?\:\/\/(www\.)?scribusstuff.org/, /^https?\:\/\/(www\.)?blenderstuff.org/
+// ==UserScript==
+// @name Plugin
+// @require js/jquery.min.js
+// @all-frames true
+// @include *://*.search.yahoo.com/*
+// @include *://search.yahoo.com/*
+// @include *://*.search.yahoo.co.jp/*
+// @include *://search.yahoo.co.jp/*
+// ==/UserScript==
+
+// Copyright (c) 2012 Romain Vallet <romain.vallet@gmail.com>
+// Licensed under the MIT license, read license.txt
+
+// Very similar to google plugin
+
+var hoverZoomPlugins = hoverZoomPlugins || [];
+hoverZoomPlugins.push({
+    name:'Yahoo',
+    version:'0.4',
+    prepareImgLinks:function (callback) {
+        function prepareImgLink(img) {
+            var img = $(this),
+                link = this.parentNode,
+                href = link.href,
+                imgUrlIndex = href.indexOf('imgurl=');
+            href = href.substring(imgUrlIndex + 7, href.indexOf('&', imgUrlIndex));
+            while (decodeURIComponent(href) != href)
+                href = decodeURIComponent(href);
+            img.data().hoverZoomSrc = [href];
+            img.addClass('hoverZoomLink');
+        }
+
+        $('a[href*="imgurl="] > img').each(prepareImgLink);
+        $('#ihover-img').load(prepareImgLink);
+
+        var res = [];
+        hoverZoom.urlReplace(res, 'img[src*="/http"]', /.*\/(http.*)/, '$1');
+        callback($(res));
+    }
+});

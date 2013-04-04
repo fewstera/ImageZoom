@@ -1,19 +1,20 @@
 // ==UserScript==
-// @name Facebook Plugin
+// @name Plugin
 // @require js/jquery.min.js
 // @all-frames true
 // @include *://*.facebook.com/*
+// @include *://facebook.com/*
 // ==/UserScript==
 
-var $ = window.$.noConflict(true); // Required for Opera and IE
-
-kango.console.log('Loaded FB Plugin');
+// Copyright (c) 2012 Romain Vallet <romain.vallet@gmail.com>
+// Licensed under the MIT license, read license.txt
 
 var hoverZoomPlugins = hoverZoomPlugins || [];
 hoverZoomPlugins.push({
     name:'Facebook',
     version:'0.9',
     prepareImgLinks:function (callback) {
+
         $('img[src*="fbcdn"], img[src*="fbexternal"], [style*="fbcdn"], [style*="fbexternal"]').mouseenter(function () {
             var img = $(this),
                 data = img.data();
