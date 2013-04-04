@@ -1,4 +1,5 @@
-﻿var options,
+﻿
+var options,
     actionKeys = [
         {
             id:'actionKey',
@@ -86,6 +87,7 @@ function loadKeys(sel) {
 
 // Saves options to localStorage.
 function saveOptions() {
+
     options.extensionEnabled = $('#chkExtensionEnabled')[0].checked;
     options.pageActionEnabled = $('#chkPageActionEnabled')[0].checked;
     options.showCaptions = $('#chkShowCaptions')[0].checked;
@@ -93,9 +95,9 @@ function saveOptions() {
     options.alwaysPreload = $('#chkAlwaysPreload')[0].checked;
     options.displayDelay = getMilliseconds($('#txtDisplayDelay'));
     options.fadeDuration = getMilliseconds($('#txtFadeDuration'));
-    options.picturesOpacity = $('#sliderPicturesOpacity').slider('value') / 100;
+    var selection = $("#txtPicturesOpacity").val();
+    options.picturesOpacity = selection/100;
     options.showWhileLoading = $('#chkShowWhileLoading')[0].checked;
-    //options.expAlwaysFullZoom = $('#chkAlwaysFullZoom')[0].checked;
     options.mouseUnderlap = $('#chkMouseUnderlap')[0].checked;
     options.filterNSFW = $('#chkFilterNSFW')[0].checked;
     options.enableGalleries = $('#chkEnableGalleries')[0].checked;
@@ -111,9 +113,9 @@ function saveOptions() {
     });
     options.whiteListMode = $('#chkWhiteListMode')[0].checked;
 
+
     enableControls(false);
     sendOptions(options);
-    restoreOptions();
     $('#saved').clearQueue().fadeIn(100).delay(5000).fadeOut(600);
 }
 
